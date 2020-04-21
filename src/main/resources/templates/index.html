@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<body>
+<h1>这里是主页，不需要权限，谁都可以访问</h1>
+<hr>
+<!--已经登录，显示-->
+<div sec:authorize="isAuthenticated()">
+    <div>
+        用户名:<span sec:authentication="name"></span>
+        当前权限：<span sec:authentication="principal.authorities"></span>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <button class="btn btn-danger" style="margin-top: 20px">退出登录</button>
+    </form>
+    <p><a href="/index">主页</a></p>
+    <p><a href="/user">用户页面</a></p>
+    <p><a href="/admin">管理员页面</a></p>
+</div>
+<!--未登录，显示-->
+<div sec:authorize="!isAuthenticated()">
+    请先进行登录
+    <p><a href="/login">登录页面</a></p>
+</div>
+</body>
+</html>
